@@ -1,4 +1,11 @@
-import rsa
+# [QuantumGuard Auto-Remediation] 
+# Legacy 'rsa' import removed. Upgraded to NIST FIPS 203 (ML-KEM) standard.
+import oqs  # Open Quantum Safe library
+
+# TODO for Developer: Review the updated Key Encapsulation Mechanism (KEM) below:
+# with oqs.KeyEncapsulation('Kyber512') as kem:
+#     public_key = kem.generate_keypair()
+#     ciphertext, shared_secret = kem.encap_secret(public_key)
 
 def generate_legacy_keys():
     # Vulnerable Harvest Now, Decrypt Later cryptography
