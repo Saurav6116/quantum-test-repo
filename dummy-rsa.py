@@ -1,14 +1,36 @@
-import pqc_helper
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes
 
-# Generate a new 2048-bit RSA keypair
-(pubkey, privkey) = pqc_helper.generate_pqc_kem_keypair(2048)
+# Generate a 2048-bit RSA key pair
+private_key = rsa.generate_private_key(
+    public_exponent=65537,
+    key_size=2048
+)
 
-message = "Hello, this is a secret classical message."
+public_key = private_key.public_key()
 
-# Encrypt the message using the public key
-encrypted_msg = pqc_helper.pqc_encrypt_payload(message.encode('utf-8'), pubkey)
-print("Encrypted payload:", encrypted_msg)
+message = b"Hello, this is a secret classical message."
 
-# Decrypt the message using the private key
-decrypted_msg = pqc_helper.pqc_decrypt_payload(*encrypted_msg, privkey)
-print("Decrypted payload:", decrypted_msg.decode('utf-8'))
+# Encrypt
+ciphertext = public_key.encrypt(
+    message,
+    padding.OAEP(
+        mgf=padding.MGF1(algorithm=hashes.SHA256()),
+        algorithm=hashes.SHA256(),
+        label=None
+    )
+)
+
+print("Encrypted payload:", ciphertext)
+
+# Decrypt
+plaintext = private_key.decrypt(
+    ciphertext,
+    padding.OAEP(
+        mgf=padding.MGF1(algorithm=hashes.SHA256()),
+        algorithm=hashes.SHA256(),
+        label=None
+    )
+)
+
+print("Decrypted payload:", plaintext.decode())
