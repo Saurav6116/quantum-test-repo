@@ -1,4 +1,5 @@
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives.asymmetric import padding
+import pqc_helper.cryptography_rsa as rsa
 from cryptography.hazmat.primitives import hashes
 
 # Generate a 2048-bit RSA key pair
