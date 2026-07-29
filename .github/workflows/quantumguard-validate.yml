@@ -29,4 +29,4 @@ jobs:
           PY
       - name: Verify pqc_helper import
         run: |
-          python -c "import pqc_helper; print('pqc_helper OK')"
+          python -c "import quantumguard_pqc; print('quantumguard_pqc OK')"
