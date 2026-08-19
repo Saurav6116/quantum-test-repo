@@ -1,0 +1,14 @@
+name: PQC Security Scan
+on: [push]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run QuantumGuard Scanner
+        uses: sauravvyas/quantum-guard-action@v1.0.0
+        with:
+          license_key: ${{ secrets.QUANTUMGUARD_LICENSE_KEY }}
