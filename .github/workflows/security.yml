@@ -4,6 +4,8 @@ on: [push]
 jobs:
   scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # 👈 This is required so the Action can push the code back!
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -12,3 +14,11 @@ jobs:
         uses: sauravvyas/quantum-guard-action@v1.0.0
         with:
           license_key: ${{ secrets.QUANTUMGUARD_LICENSE_KEY }}
+
+      - name: Commit and Push the Hybrid Remediations
+        run: |
+          git config --global user.name "QuantumGuard Auto-Remediator"
+          git config --global user.email "security@quantumguard.io"
+          git add .
+          # This only commits if QuantumGuard actually changed files
+          git diff --quiet && git diff --staged --quiet || (git commit -m "security: migrate to hybrid post-quantum cryptography" && git push)
