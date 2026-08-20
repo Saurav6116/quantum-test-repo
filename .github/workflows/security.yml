@@ -11,15 +11,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Run QuantumGuard Scanner (Reports Vulnerabilities)
+      - name: Run QuantumGuard Scanner & Auto-Remediate
         uses: sauravvyas/quantum-guard-action@v1.0.1
         with:
           license_key: ${{ secrets.QUANTUMGUARD_LICENSE_KEY }}
-
-      - name: Automatically Replace the Code
-        env:
-          QUANTUMGUARD_LICENSE_KEY: ${{ secrets.QUANTUMGUARD_LICENSE_KEY }}
-        run: yes | quantumguard remediate local .
+          auto_remediate: 'true'
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
