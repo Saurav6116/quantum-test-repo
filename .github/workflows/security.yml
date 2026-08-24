@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run QuantumGuard Scanner & Auto-Remediate
-        uses: sauravvyas/quantum-guard-action@v1.0.3
+        uses: sauravvyas/quantum-guard-action@v1.0.1
         with:
           license_key: ${{ secrets.QUANTUMGUARD_LICENSE_KEY }}
           auto_remediate: 'true'
