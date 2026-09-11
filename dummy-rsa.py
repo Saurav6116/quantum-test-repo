@@ -1,5 +1,5 @@
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives.asymmetric import padding
+from quantumguard_pqc.cryptography_patch import rsa
+from quantumguard_pqc.cryptography_patch import padding
 from cryptography.hazmat.primitives import hashes
 
 # Generate a 2048-bit RSA key pair
